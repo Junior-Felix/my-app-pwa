@@ -4,6 +4,10 @@
 
 	let { children } = $props();
 </script>
+<svelte:head>
+    <link rel="manifest" href="/site.webmanifest" />
+	<meta name="theme-color" content="#ff3e00" />
+</svelte:head>
 
 <div class="app">
 	<Header />
