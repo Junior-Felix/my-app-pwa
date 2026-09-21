@@ -1,29 +1,25 @@
 <script lang="ts">
-    let downloading = $state(false);
-    let availableOffline = $state(false);
+	let downloading = $state(false);
+	let availableOffline = $state(false);
 
-    async function saveOffline(){
-        downloading = true;
-        try{
-            const registration = await navigator.serviceWorker.ready;
-            const worker = registration.active;
+	async function saveOffline() {
+		downloading = true;
+		try {
+			const registration = await navigator.serviceWorker.ready;
+			const worker = registration.active;
 
-            worker?.postMessage({
-                type: 'CACHE_PAGE',
-                urls: [
-                    '/test-one.jpg',
-                    '/test-two.jpg',
-                    '/test-three.jpg',
-                ]
-            });
+			worker?.postMessage({
+				type: 'CACHE_PAGE',
+				urls: ['/test-one.jpg', '/test-two.jpg', '/test-three.jpg']
+			});
 
-            availableOffline = true;
-        }catch(error){
-            console.error('Error caching page', error)
-        }finally{
-            downloading = false;
-        }
-    }
+			availableOffline = true;
+		} catch (error) {
+			console.error('Error caching page', error);
+		} finally {
+			downloading = false;
+		}
+	}
 </script>
 
 <div class="flex flex-col gap-6 p-8">
@@ -32,13 +28,19 @@
 		<img src="/test-two.jpg" alt="" />
 		<img src="/test-three.jpg" alt="" />
 	</div>
-    <button onclick={saveOffline} disabled={downloading || availableOffline}>
-        {#if downloading}
-		Saving...
-	{:else if availableOffline}
-		Available offline
-	{:else}
-		Make available offline
-	{/if}
-    </button>
-   </div>
+	<div class="">
+		<button
+			class="cursor-pointer bg-purple-900 px-2 py-4 text-white rounded-md"
+			onclick={saveOffline}
+			disabled={downloading || availableOffline}
+		>
+			{#if downloading}
+				Saving...
+			{:else if availableOffline}
+				Available offline
+			{:else}
+				Make available offline
+			{/if}
+		</button>
+	</div>
+</div>
